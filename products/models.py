@@ -86,7 +86,7 @@ class Product(models.Model):
     def delete(self, *args, **kwargs):
         self.image.delete()
         self.video.delete()
-        self.certificate()
+        # self.certificate.delete()
         super().delete(*args, **kwargs)
 
     def rating(self):
