@@ -1,0 +1,42 @@
+{% extends 'main.html' %} {% block body %}
+
+<style>
+  .dashboard {
+    padding: 50px;
+    margin: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+</style>
+
+<div class="dashboard">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %} {{form.as_p}}
+    <button type="submit" class="btn btn-success">Add</button>
+  </form>
+</div>
+
+<div class="dashboard">
+  <ui>
+    <h3>Existing products</h3>
+    {% for product in products %}
+    <li>
+      <a
+        href=" {% url 'dashboard:edit_product' product.id %} "
+        class="link-primary"
+        >{{product}}</a
+      >
+
+      <form
+        action="{% url 'dashboard:delete_product' product.id %}"
+        method="POST"
+      >
+        {% csrf_token %}
+        <button type="submit" class="btn btn-denger">delete</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ui>
+</div>
+
+{% endblock %}

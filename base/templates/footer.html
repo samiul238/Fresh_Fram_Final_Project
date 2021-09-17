@@ -1,0 +1,201 @@
+{% load static %}
+
+<section class="news-part">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-5 col-lg-6 col-xl-7">
+        <div class="news-text">
+          <h2>Get 20% Discount for Subscriber</h2>
+          <p>Lorem ipsum dolor consectetur adipisicing accusantium</p>
+        </div>
+      </div>
+      <div class="col-md-7 col-lg-6 col-xl-5">
+        <form
+          class="news-form"
+          action=" {% url 'base:subscribe' %} "
+          method="POST"
+        >
+          {% csrf_token %}
+          <input
+            name="email"
+            type="text"
+            placeholder="Enter Your Email Address"
+          />
+          <button type="submit">
+            <span><i class="icofont-ui-email"></i>Subscribe</span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="visual-part">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
+        <div class="visual-wrap">
+          <div class="visual-icon">
+            <i class="icofont-vehicle-delivery-van"></i>
+          </div>
+          <div class="visual-content">
+            <h5>free home delivery</h5>
+            <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="visual-wrap">
+          <div class="visual-icon"><i class="icofont-retweet"></i></div>
+          <div class="visual-content">
+            <h5>instant return policy</h5>
+            <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="visual-wrap">
+          <div class="visual-icon"><i class="icofont-support"></i></div>
+          <div class="visual-content">
+            <h5>quick support system</h5>
+            <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-lg-3">
+        <div class="visual-wrap">
+          <div class="visual-icon">
+            <i class="icofont-ssl-security"></i>
+          </div>
+          <div class="visual-content">
+            <h5>secure payment way</h5>
+            <p>Lorem ipsum dolor sit amet adipisicing elit nobis.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer-part">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-6 col-xl-3">
+        <div class="footer-widget">
+          <a class="footer-logo" href="#"
+            ><img src=" {% static 'images/logo.png' %} " alt="logo"
+          /></a>
+          <p class="footer-desc">
+            Fresh Farm is a online based e-commerce store. It provide you the
+            best and generic foods out there at the cheapest rate .
+          </p>
+          <ul class="footer-social">
+            <li><a class="icofont-facebook" href="#"></a></li>
+            <li><a class="icofont-twitter" href="#"></a></li>
+            <li><a class="icofont-linkedin" href="#"></a></li>
+            <li><a class="icofont-instagram" href="#"></a></li>
+            <li><a class="icofont-pinterest" href="#"></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="footer-widget contact">
+          <h3 class="footer-title">contact us</h3>
+          <ul class="footer-contact">
+            <li>
+              <i class="icofont-ui-email"></i>
+              <p>
+                <span>freshfarm@gmail.com</span><span>framfresh@gmail.com</span>
+              </p>
+            </li>
+            <li>
+              <i class="icofont-ui-touch-phone"></i>
+              <p><span>+8801943827803</span><span>+8801521330313</span></p>
+            </li>
+            <li>
+              <i class="icofont-location-pin"></i>
+              <p>Block-D, Road-3/C, Uttara, Dhaka,Bangladesh</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="footer-widget">
+          <h3 class="footer-title">quick Links</h3>
+          <div class="footer-links">
+            <ul>
+              <li><a href=" {% url 'base:profile' %} ">My Account</a></li>
+              {% comment %}
+              <li><a href=" {% url 'base:orders' %} ">Order Tracking</a></li>
+              {% endcomment %}
+              <li><a href=" {% url 'products:index' %} ">Shop</a></li>
+              {% comment %}
+              <li><a href="#new-items">New Arrivals</a></li>
+              {% endcomment %} {% comment %}
+              <li><a href="wishlist.html">Wish List</a></li>
+              {% endcomment %}
+            </ul>
+            <ul>
+              {% comment %}
+              <li><a href="#">Location</a></li>
+              {% endcomment %} {% comment %}
+              <li><a href="about.html">About Us</a></li>
+              {% endcomment %}
+              <li><a href=" {% url 'base:contact' %} ">Contact</a></li>
+              <li><a href=" {% url 'base:help' %} ">Faq</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-xl-3">
+        <div class="footer-widget">
+          <h3 class="footer-title">Download App</h3>
+          <p class="footer-desc">
+            Download Fresh Farm app and enjoy extra 5% discount.
+          </p>
+          <div class="footer-app">
+            <a href="#"
+              ><img
+                src=" {% static 'images/google-store.png' %} "
+                alt="google" /></a
+            ><a href="#"
+              ><img src=" {% static 'images/app-store.png' %} " alt="app"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="footer-bottom">
+          <p class="footer-copytext">
+            &copy; All Copyrights Reserved by
+            <a target="_blank" href="../../../user/mironcoder.html">
+              <span class="fs-2 fw-bold">F</span>resh Farm</a
+            >
+          </p>
+          <div class="footer-card">
+            <a href="#"
+              ><img
+                src=" {% static 'images/payment/jpg/01.jpg' %} "
+                alt="payment" /></a
+            ><a href="#"
+              ><img
+                src=" {% static 'images/payment/jpg/02.jpg' %} "
+                alt="payment" /></a
+            ><a href="#"
+              ><img
+                src=" {% static 'images/payment/jpg/03.jpg' %} "
+                alt="payment"
+            /></a>
+            <a href="#"
+              ><img
+                src=" {% static 'images/payment/jpg/04.jpg' %} "
+                alt="payment"
+            /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

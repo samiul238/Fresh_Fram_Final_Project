@@ -1,0 +1,81 @@
+{% extends 'main.html' %} {% block body %}
+
+<style>
+  .dashboard {
+    padding: 50px;
+    margin: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+</style>
+
+<div class="dashboard">
+  <ui>
+    <h2>Options</h2>
+    <li>
+      <a href=" {% url 'dashboard:products' %} " class="link-primary"
+        >Products</a
+      >
+    </li>
+    <li>
+      <a href=" {% url 'dashboard:banner' %} " class="link-primary">Banner</a>
+    </li>
+    <li>
+      <a href=" {% url 'dashboard:blogs' %} " class="link-primary">Blogs</a>
+    </li>
+    <li>
+      <a href=" {% url 'dashboard:brands' %} " class="link-primary">Brands</a>
+    </li>
+    <li>
+      <a href=" {% url 'dashboard:orders' %} " class="link-primary">Orders</a>
+    </li>
+  </ui>
+</div>
+
+<div class="dashboard">
+  <ui>
+    <h3>Categories</h3>
+    {% for category in categories %}
+    <li>
+      <a href="{% url 'dashboard:edit_category' category.id %}">{{category}}</a>
+      <form
+        action="{% url 'dashboard:delete_category' category.id %}"
+        method="POST"
+      >
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">delete</button>
+      </form>
+    </li>
+    {% endfor %}
+
+    <button type="button" class="btn btn-info">
+      <a href="{% url 'dashboard:add_category' %}">add category</a>
+    </button>
+  </ui>
+</div>
+
+<div class="dashboard">
+  <ui>
+    <h3>Sub Categories</h3>
+    {% for category in sub_categories %}
+    <li>
+      <a href="{% url 'dashboard:edit_sub_category' category.id %}"
+        >{{category}}: {{category.category}}
+      </a>
+      <form
+        action="{% url 'dashboard:delete_sub_category' category.id %}"
+        method="POST"
+      >
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">delete</button>
+      </form>
+    </li>
+    {% endfor %}
+
+    <button type="button" class="btn btn-info">
+      <a href="{% url 'dashboard:add_sub_category' %}">add sub category</a>
+    </button>
+  </ui>
+</div>
+
+{% endblock %}

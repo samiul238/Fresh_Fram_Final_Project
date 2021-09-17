@@ -1,0 +1,305 @@
+{%load static%} {% load base_tags %}
+
+<span></span>
+{% include 'base/header/header_1.html' %}
+
+<aside class="category-part">
+  <div class="category-container">
+    <div class="category-header">
+      <a href="#"><img src=" {% static 'images/logo.png' %} " alt="logo" /></a
+      ><button class="category-close"><i class="icofont-close"></i></button>
+    </div>
+    <ul class="category-list">
+      {% for category in categories %}
+      <li>
+        <a class="cate-link dropdown-link" href="#">{{category}}</a>
+        <ul class="dropdown-list">
+          {% for sub_cat in category|sub_cat_finder %}
+
+          <li>
+            <a href=" {% url 'products:sub_cat_products' sub_cat %} "
+              >{{ sub_cat }}
+            </a>
+          </li>
+
+          {% endfor %}
+        </ul>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="category-footer">
+      <p>
+        All Rights Reserved by <a href=" {% url 'base:index' %} ">Fresh Farm</a>
+      </p>
+    </div>
+  </div>
+</aside>
+
+<aside class="cart-part">
+  <div class="cart-container">
+    <div class="cart-header">
+      <div class="cart-total">
+        <i class="icofont-shopping-cart"></i
+        ><span>total item ({{num_of_product_in_cart}})</span>
+      </div>
+      <button class="cart-close"><i class="icofont-close"></i></button>
+    </div>
+    <ul class="cart-list">
+      {% for product in carts %}
+      <li class="cart-item">
+        <div class="cart-media">
+          <a href="#"
+            ><img
+              src=" {{product.product.image.url}} "
+              alt=" {{product.product.image.url}} "
+          /></a>
+          {% comment %}
+          <button class="cart-delete"><i class="icofont-bin"></i></button>
+          {% endcomment %}
+        </div>
+        <div class="cart-info-group">
+          <div class="cart-info">
+            <h6>
+              <a href=" {% url 'products:product_details' product.id %} ">
+                {{product.product.name}}
+              </a>
+            </h6>
+            <p>Unit Price - ৳{{product.product.discount_price}}</p>
+            <p>Quantity {{product.quantity}}</p>
+          </div>
+          <div class="cart-action-group">
+            {% comment %}
+            <div class="product-action">
+              <button class="action-minus" title="Quantity Minus">
+                <i class="icofont-minus"></i></button
+              ><input
+                class="action-input"
+                title="Quantity Number"
+                type="text"
+                name="quantity"
+                value="1"
+              />
+              <button class="action-plus" title="Quantity Plus">
+                <i class="icofont-plus"></i>
+              </button>
+            </div>
+            {% endcomment %}
+            <h6>
+              <script>
+                {
+                  document.write('Price * Quantity = ' ,{{product.product.discount_price}} * {{product.quantity}});
+                }
+              </script>
+            </h6>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    <div class="cart-footer">
+      {% comment %}
+      <button class="coupon-btn">Do you have a coupon code?</button>
+      {% endcomment %}
+      <form class="coupon-form">
+        <input type="text" placeholder="Enter your coupon code" /><button
+          type="submit"
+        >
+          <span>apply</span>
+        </button>
+      </form>
+      <a class="cart-checkout-btn" href=" {% url 'base:checkout' %} "
+        ><span class="checkout-label">Proceed to Checkout</span
+        ><span class="checkout-price">৳{{total_price}}</span></a
+      >
+    </div>
+  </div>
+</aside>
+
+<aside class="mobile-nav">
+  <div class="nav-container">
+    <div class="nav-header">
+      <a href="#"><img src=" {% static 'images/logo.png' %} " alt="logo" /></a
+      ><button class="nav-close"><i class="icofont-close"></i></button>
+    </div>
+    <div class="nav-content">
+      <div class="nav-profile">
+        {% if request.user.is_authenticated %}
+        <a class="nav-user" href=" {% url 'base:profile' %} "
+          ><img src=" {{custom_user.get_avatar}} " alt="user"
+        /></a>
+        {% else %}
+
+        <h4 class="nav-name">
+          <a href=" {% url 'base:login_user' %} ">join here</a>
+        </h4>
+        {% endif %}
+      </div>
+      <div class="nav-select-group">
+        <div class="nav-select">
+          <i class="icofont-world"></i>
+          <select class="select">
+            <option value="english" selected="">English</option>
+            <option value="bangali">Bangali</option>
+            l
+          </select>
+        </div>
+        <div class="nav-select">
+          <i class="icofont-money"></i>
+          <select class="select">
+            <option value="english" selected="">Doller</option>
+            <option value="arabic">Taka</option>
+          </select>
+        </div>
+      </div>
+      <ul class="nav-list">
+        <li>
+          <a class="nav-link dropdown-link" href=" # "
+            ><i class="icofont-home"></i>Home</a
+          >
+          <ul class="dropdown-list">
+            <li><a href=" {% url 'base:index' %} ">Home index</a></li>
+          </ul>
+        </li>
+
+        <li>
+          <a class="nav-link dropdown-link" href="#"
+            ><i class="icofont-home"></i>category</a
+          >
+          <ul class="category-list">
+            {% for category in categories %}
+            <li>
+              <a class="cate-link dropdown-link" href="#">{{category}}</a>
+              <ul class="dropdown-list">
+                {% for sub_cat in category|sub_cat_finder %}
+
+                <li>
+                  <a href=" {% url 'products:sub_cat_products' sub_cat %} "
+                    >{{ sub_cat }}
+                  </a>
+                </li>
+
+                {% endfor %}
+              </ul>
+            </li>
+            {% endfor %}
+          </ul>
+        </li>
+
+        <li>
+          <a class="nav-link dropdown-link" href="#"
+            ><i class="icofont-page"></i>pages</a
+          >
+          <ul class="dropdown-list">
+            <li><a href=" {% url 'base:help' %} ">faqs</a></li>
+            {% comment %}
+            <li><a href=" {% url 'base:offers' %} ">offers</a></li>
+            {% endcomment %} {% comment %}
+            <li><a href="about.html">about us</a></li>
+            {% endcomment %}
+            <li><a href=" {% url 'base:contact' %} ">contact us</a></li>
+            {% comment %}
+            <li><a href="blank-page.html">blank page</a></li>
+            <li><a href="privacy.html">privacy policy</a></li>
+            <li><a href="coming-soon.html">coming soon</a></li>
+            <li><a href="error.html">404 Error</a></li>
+            {% endcomment %}
+          </ul>
+        </li>
+        <li>
+          <a class="nav-link dropdown-link" href="#"
+            ><i class="icofont-bag-alt"></i>my account</a
+          >
+          <ul class="dropdown-list">
+            <li><a href="  {% url 'base:profile' %}  ">profile</a></li>
+            {% comment %}
+            <li><a href="wishlist.html">wishlist</a></li>
+            {% endcomment %} {% comment %}
+            <li><a href="compare.html">compare</a></li>
+            {% endcomment %}
+            <li><a href=" {% url 'base:checkout' %} ">checkout</a></li>
+            {% comment %}
+            <li><a href="orderlist.html">order history</a></li>
+            {% endcomment %} {% comment %}
+            <li><a href="invoice.html">order invoice</a></li>
+            {% endcomment %}
+          </ul>
+        </li>
+        <li>
+          <a class="nav-link dropdown-link" href="#"
+            ><i class="icofont-lock"></i>Authentication</a
+          >
+          <ul class="dropdown-list">
+            {% if request.user.is_authenticated %} {% comment %}
+            <li><a href="reset.html">reset password</a></li>
+            {% endcomment %}
+            <li>
+              <a href=" {% url 'base:change_password' %} ">change password</a>
+            </li>
+            {% else %}
+            <li><a href=" {% url 'base:login_user' %} ">login</a></li>
+            <li><a href="{% url 'base:register_user' %}">register</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        <li>
+          <a class="nav-link dropdown-link" href="#"
+            ><i class="icofont-book-alt"></i>Our Blogs</a
+          >
+          <ul class="dropdown-list">
+            <li><a href=" {% url 'blog:index' %} ">blog grid</a></li>
+            {% comment %}
+            <li><a href="blog-standard.html">blog standard</a></li>
+            <li><a href="blog-details.html">blog details</a></li>
+            {% endcomment %}
+          </ul>
+        </li>
+        {% comment %}
+        <li>
+          <a class="nav-link" href=" {% url 'base:offers' %} "
+            ><i class="icofont-sale-discount"></i>offers</a
+          >
+        </li>
+        {% endcomment %}
+        <li>
+          <a class="nav-link" href=" {% url 'base:profile' %} "
+            ><i class="icofont-user-alt-3"></i>profile</a
+          >
+        </li>
+      </ul>
+      <div class="nav-info-group">
+        <div class="nav-info">
+          <i class="icofont-ui-touch-phone"></i>
+          <p><small>call us</small><span>(+880) 1943827803</span></p>
+        </div>
+        <div class="nav-info">
+          <i class="icofont-ui-email"></i>
+          <p><small>email us</small><span>FreshFarm@gmail.com</span></p>
+        </div>
+      </div>
+      <div class="nav-footer">
+        <p>
+          All Rights Reserved by
+          <a href=" {% url 'base:index' %} ">Fresh Farm</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<menu class="mobile-menu">
+  <a href=" {% url 'base:index' %} " title="Home Page"
+    ><i class="icofont-ui-home"></i><span>Home</span></a
+  ><button class="cate-btn" title="Category List">
+    <i class="icofont-listine-dots"></i><span>category</span>
+  </button>
+  <button class="cart-btn" title="Cartlist">
+    <i class="icofont-shopping-cart"></i><span>cartlist</span><sup>7+</sup>
+  </button>
+  {% comment %}
+  <a href="wishlist.html" title="Wishlist"
+    ><i class="icofont-ui-love"></i><span>wishlist</span><sup>0</sup></a
+  ><a href="compare.html" title="Compare List"
+    ><i class="icofont-ui-rotation"></i><span>compare</span><sup>0</sup></a
+  >
+  {% endcomment %}
+</menu>

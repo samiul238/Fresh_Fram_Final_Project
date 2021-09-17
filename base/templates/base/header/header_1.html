@@ -1,0 +1,252 @@
+{%load static%} {% load base_tags %}
+
+<section class="header-top">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-lg-5">
+        <div class="header-top-welcome">
+          <p>
+            Welcome to <span class="fw-bold">Fresh Farm</span> in Your Dream
+            Online Store!
+          </p>
+        </div>
+      </div>
+      <div class="col-md-5 col-lg-3">
+        <div class="header-top-select">
+          <div class="header-select">
+            <i class="icofont-world"></i>
+            <a class="text-light" href="">English</a>
+          </div>
+          <div class="header-select">
+            <i class="icofont-money"></i>
+            <a class="text-light" href="">Taka</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-7 col-lg-4">
+        <ul class="header-top-list">
+          {% comment %} <li><a href="{% url 'base:offers' %}">offers</a></li> {% endcomment %}
+          <li><a href="{% url 'base:help' %}">need help</a></li>
+          <li><a href="{% url 'base:contact' %}">contact us</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="header-part">
+  <div class="container-fluid">
+    <div class="header-content-group">
+      <div class="header-widget-group left">
+        <button class="header-widget header-user" href="#" title="My Account">
+          <img src="images/user.png" alt="user" /></button
+        ><a class="header-logo" href=" {% url 'base:index' %} "
+          ><img src=" {% static 'images/logo.png' %} " alt="logo"
+        /></a>
+        <button
+          class="header-widget header-src"
+          title="Search Bar"
+        >
+          <i class="icofont-ui-search"></i>
+        </button>
+        <button class="header-widget header-cate" title="Category List">
+          <i class="icofont-align-left"></i><span>category</span>
+        </button>
+      </div>
+      <form class="header-form" action=" {% url 'base:search' %} ">
+        <input type="text" placeholder="Search Products..." name="search" required/>
+        <button type="submit">
+          <i class="icofont-ui-search"></i>
+        </button>
+      </form>
+      <div class="header-widget-group right">
+        {% if not user.is_authenticated %}
+        <a
+          class="header-widget"
+          href=" {% url 'base:login_user' %} "
+          title="My Account"
+          ><img
+            src=" {%static 'images/user.png' %} "
+            alt="{%static 'images/user.png' %}"
+          /><span>Login</span>
+        </a>
+        {% else %}
+
+        <form method='POST' action=" {% url 'base:logout_user' %} ">
+        <img style="width:20px;height:20px;display:inline-block;" 
+        src=" {{custom_user.get_avatar}} " 
+        alt="{{custom_user.get_avatar}} " 
+        />
+        {% csrf_token %}
+        <button  type="submit"> <span class='px-3'>Logout</span> </button>
+        </form
+
+        {% endif %}
+
+        <a class="header-widget" href="compare.html" title="Compare List"
+          ><i class="icofont-ui-rotation"></i><sup>0</sup></a
+        >
+        {% comment %} <a class="header-widget" href="wishlist.html" title="Wishlist"
+          ><i class="icofont-ui-love"></i><sup>0</sup></a
+        > {% endcomment %}
+        <button class="header-widget header-cart" title="Cartlist">
+          <i class="icofont-shopping-cart"></i><span>৳ {{total_price}}</span><sup>{{num_of_product_in_cart}}+</sup>
+        </button>
+      </div>
+    </div>
+  </div>
+</section> 
+
+<nav class="navbar-part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="navbar-content">
+          <ul class="navbar-list">
+            <li class="navbar-item dropdown">
+              <a class="navbar-link dropdown-arrow" href="#">home</a>
+              <ul class="dropdown-position-list">
+                <li><a href=" {% url 'base:index' %} ">Home index</a></li>
+                {% comment %} <li><a href="home-grid.html">Home grid</a></li> {% endcomment %}
+                {% comment %} <li><a href="home-classic.html">Home classic</a></li> {% endcomment %}
+                {% comment %} <li><a href="home-category.html">Home category</a></li> {% endcomment %}
+              </ul>
+            </li>
+            
+            <li class="navbar-item dropdown-megamenu">
+              <a class="navbar-link dropdown-arrow" href="#">category</a>
+              <div class="megamenu">
+                <div class="container">
+                  <div class="row row-cols-5">
+
+                  {% for category in categories %}
+                    <div class="col">
+                      <div class="megamenu-wrap">
+                        <h5 class="megamenu-title">
+                          <a href=" {% url 'products:cat_products' category %} "> {{ category }} </a>
+                        </h5>
+                        <ul class="megamenu-list">
+
+                        {% for sub_cat in category|sub_cat_finder %}
+
+                      <li><a href=" {% url 'products:sub_cat_products' sub_cat %} ">{{ sub_cat }}</a></li>
+
+                        {% endfor %}                      
+                        </ul>
+                      </div>
+                    </div>
+                  {% endfor %}           
+
+                  </div>
+                </div>
+              </div>
+            </li>
+            
+            <li class="navbar-item dropdown-megamenu">
+              <a class="navbar-link dropdown-arrow" href="#">pages</a>
+              <div class="megamenu">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <div class="megamenu-wrap">
+                        <h5 class="megamenu-title">useful pages</h5>
+                        <ul class="megamenu-list">
+                          <li><a href=" {% url 'base:profile' %} ">my profile</a></li>
+
+                          {% if request.user.is_authenticated %}
+                          <li><a href=" {% url 'base:orders' %} ">Your orders</a></li>
+                          {% endif %}
+
+                          {% if request.user.is_superuser %}
+                          <li><a href=" {% url 'dashboard:index' %} ">dashboard</a></li>
+                          {% endif %}
+                          {% comment %} <li><a href="about.html">about us</a></li>
+                          <li><a href="contact.html">contact us</a></li>
+                          <li><a href="offer.html">offers</a></li>
+                          <li><a href="faq.html">faqs</a></li> {% endcomment %}
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="megamenu-wrap">
+                        <h5 class="megamenu-title">more pages</h5>
+                        <ul class="megamenu-list">
+                          {% comment %} <li><a href="compare.html">compare</a></li>
+                          <li><a href="privacy.html">privacy policy</a></li>
+                          <li>
+                            <a href="coming-soon.html">coming soon</a>
+                          </li>
+                          <li><a href="blank-page.html">blank page</a></li>
+                          <li><a href="error.html">404 Error</a></li> {% endcomment %}
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-lg-3">
+                      <div class="megamenu-wrap">
+                        <h5 class="megamenu-title">user action</h5>
+                        <ul class="megamenu-list">
+                          {% comment %} <li><a href="wishlist.html">wishlist</a></li>
+                          <li><a href="checkout.html">checkout</a></li>
+                          <li>
+                            <a href="orderlist.html">order history</a>
+                          </li>
+                          <li><a href="invoice.html">order invoice</a></li> {% endcomment %}
+                        </ul>
+                      </div>
+                    </div>
+                    
+                  </div>
+                </div>
+              </div>
+            </li>
+            
+            <li class="navbar-item dropdown">
+              <a class="navbar-link dropdown-arrow" href="#">authentication</a>
+              <ul class="dropdown-position-list">
+              {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'base:login_user' %}">login</a></li>
+                <li><a href="{% url 'base:register_user' %}">register</a></li>
+                {% else %}
+                <li><a href="{% url 'base:logout_user' %}">Logout</a></li>
+                <li><a href="{% url 'base:change_password' %}">change password</a></li>
+                {% comment %} <li><a href="reset.html">reset password</a></li> {% endcomment %}
+              {% endif %}
+                
+                
+              </ul>
+            </li>
+            
+            <li class="navbar-item dropdown">
+              <a
+                class="navbar-link dropdown-arrow"
+                href=" {% url 'blog:index' %} "
+                >Our Blogs</a
+              >
+              <ul class="dropdown-position-list">
+                {% comment %}
+                <li><a href="blog-grid.html">blog grid</a></li>
+                {% endcomment %}
+                <li><a href=" {% url 'blog:index' %} ">blog standard</a></li>
+                {% comment %}
+                <li><a href="blog-details.html">blog details</a></li>
+                {% endcomment %}
+              </ul>
+            </li>
+          </ul>
+          <div class="navbar-info-group">
+            <div class="navbar-info">
+              <i class="icofont-ui-touch-phone"></i>
+              <p>
+                <small>Customer Support</small><span>(+880) 1943827803</span>
+              </p>
+            </div>
+            <div class="navbar-info">
+              <i class="icofont-ui-email"></i>
+              <p><small>email us</small><span>FreshFram@gmail.com</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,205 @@
+{% extends 'main.html' %} {% block body %} {% load static %}
+<span></span>
+{% load blog_tags %}
+<link rel="stylesheet" href=" {% static 'css/custom/blog-details.css' %} " />
+
+<section class="inner-section single-banner">
+  <div class="container">
+    <h2>blog details</h2>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href=" {% url 'base:index' %} ">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href=" {% url 'blog:index' %} ">Blog grid</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">Blog Details</li>
+    </ol>
+  </div>
+</section>
+
+<section class="inner-section blog-details-part">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-12 col-xl-10">
+        <article class="blog-details">
+          <a class="blog-details-thumb" href=""
+            ><img src=" {{blog.image.url}} " alt="blog"
+          /></a>
+          <div class="blog-details-content">
+            <ul class="blog-details-meta">
+              <li>
+                <i class="icofont-ui-calendar"></i
+                ><span>{{blog.created_at}}</span>
+              </li>
+              <li>
+                <i class="icofont-user-alt-3"></i><span>{{blog.user}}</span>
+              </li>
+              <li>
+                <i class="icofont-speech-comments"></i
+                ><span>{{num_comments}} comments</span>
+              </li>
+              <li>
+                <i class="icofont-share-boxed"></i
+                ><span>{{blog.share}} share</span>
+              </li>
+            </ul>
+            <h2 class="blog-details-title">{{blog.title}}</h2>
+
+            <p>{{blog.description}}</p>
+
+            <div class="blog-details-footer">
+              <ul class="blog-details-share">
+                <h4>share:</h4>
+                <li><a href="#" class="icofont-facebook"></a></li>
+                <li><a href="#" class="icofont-twitter"></a></li>
+                <li><a href="#" class="icofont-linkedin"></a></li>
+                <li><a href="#" class="icofont-pinterest"></a></li>
+                <li><a href="#" class="icofont-instagram"></a></li>
+              </ul>
+              <ul class="blog-details-tag">
+                <h4>tags:</h4>
+                {% for tag in blog.tag_list|evaler %}
+                <li><a href="#">{{tag}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </article>
+        <div class="blog-details-profile">
+          <a href=""><img src=" {{blog.user_avatar.url}} " alt="avatar" /></a>
+          <h3>{{blog.user.username}}</h3>
+          <h4>{{blog.user.email}}</h4>
+          <ul>
+            <li><a href="#" class="icofont-facebook"></a></li>
+            <li><a href="#" class="icofont-twitter"></a></li>
+            <li><a href="#" class="icofont-linkedin"></a></li>
+            <li><a href="#" class="icofont-pinterest"></a></li>
+            <li><a href="#" class="icofont-instagram"></a></li>
+          </ul>
+          <p>{{request.user.description}}</p>
+        </div>
+
+        {% comment %}
+        <div class="blog-details-navigate">
+          <div class="row">
+            <div class="col-md-6 col-lg-6">
+              <div class="blog-details-prev">
+                <h4>
+                  <a href="#"
+                    >You don't have to cook fancy or complicated masterpieces -
+                    just good food from fresh ingredients.</a
+                  >
+                </h4>
+                <a class="nav-arrow" href="#"
+                  ><i class="icofont-arrow-left"></i>prev post</a
+                >
+              </div>
+            </div>
+            <div class="col-md-6 col-lg-6">
+              <div class="blog-details-next">
+                <h4>
+                  <a href="#"
+                    >When diet is wrong , medicine is of no use. When diet is
+                    correct, medicine is of no need .</a
+                  >
+                </h4>
+                <a class="nav-arrow" href="blog-details-1.html"
+                  >next post<i class="icofont-arrow-right"></i
+                ></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endcomment %}
+
+        <div class="blog-details-comment">
+          <h3 class="comment-title">{{num_comments}} Comments</h3>
+          <ul class="comment-list">
+            {% for comment in comments %}
+            <li class="comment-item">
+              <div class="comment-media">
+                <a class="comment-avatar" href="#"
+                  ><img src="{{comment.user_avatar.url}}" alt="review"
+                /></a>
+                <h6 class="comment-meta">
+                  <a href="#">{{comment.user.username}}</a
+                  ><span>{{comment.created_at}}</span>
+                </h6>
+              </div>
+              <p class="comment-desc">{{comment.comment}}</p>
+              <form
+                class="comment-reply"
+                action=" {% url 'blog:add_to_reply' comment.id blog.id %} "
+                method="POST"
+              >
+                {% csrf_token %}
+                <input
+                  name="repCom"
+                  type="text"
+                  placeholder="reply your comment"
+                /><button type="submit">
+                  <i class="icofont-reply"></i>reply
+                </button>
+              </form>
+              {% comment %} reply {% endcomment %}
+              <ul class="comment-reply-list">
+                {% for reply in comment|reply %}
+                <li class="comment-reply-item">
+                  <div class="comment-media">
+                    <a class="comment-avatar" href="#"
+                      ><img src="{{reply.cu.avatar.url}}" alt="review"
+                    /></a>
+                    <h6 class="comment-meta">
+                      <a href="#">{{reply.user.username}}</a
+                      ><span>{{reply.date}}</span>
+                    </h6>
+                  </div>
+                  <p class="comment-desc">{{reply.rep_comment}}</p>
+
+                  {% if request.user == reply.user %}
+                  <form
+                    class="comment-reply"
+                    action=" {% url 'blog:reply_delete' reply.id blog.id %} "
+                    method="POST"
+                  >
+                    {% csrf_token %}
+                    <button type="submit">
+                      <i class="icofont-delete"></i>delete
+                    </button>
+                  </form>
+                  {% endif %}
+                </li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <form
+          class="blog-details-form"
+          action=" {% url 'blog:add_to_comments' blog.id %} "
+          method="POST"
+        >
+          {% csrf_token %}
+          <h3 class="details-form-title">post comment</h3>
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="form-group">
+                <textarea
+                  name="comment"
+                  class="form-control"
+                  placeholder="write your comment"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="form-btn">post comment</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% load static %} {% load base_tags %}
+
+<section class="section suggest-part">
+  <div class="container">
+    <ul class="suggest-slider slider-arrow">
+      {% for category in categories %}
+
+      <li>
+        <a
+          class="suggest-card"
+          href=" {% url 'products:cat_products' category %} "
+        >
+          <img src="{{ category.image.url }}" alt="suggest" />
+          <h5>
+            {{ category }}
+            <span>{{ category|category_product_counter }} items</span>
+          </h5>
+        </a>
+      </li>
+
+      {% endfor %}
+    </ul>
+  </div>
+</section>

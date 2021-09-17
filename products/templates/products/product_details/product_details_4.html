@@ -1,0 +1,165 @@
+{% load products_tags %}
+
+<section class="inner-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#tab-desc" class="tab-link active" data-bs-toggle="tab">descriptions</a>
+          </li>
+          <li>
+            <a href="#tab-spec" class="tab-link" data-bs-toggle="tab">Certificate</a>
+          </li>
+          <li>
+            <a href="#tab-reve" class="tab-link" data-bs-toggle="tab">reviews ({{reviews_count}})</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="tab-pane active" id="tab-desc">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="product-details-frame">
+            <div class="tab-descrip">
+              <p>{{ product.description }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="product-details-frame">
+            <div class="tab-descrip">
+              <video style="width: 100%" controls>
+                <source src=" {{product.video.url}} " type="video/mp4" />
+                Your browser does not support HTML video.
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tab-pane" id="tab-spec">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="product-details-frame">
+            <table class="table table-bordered">
+              {% if product.certificate %}
+              <img src="{{product.certificate.url}}" alt="" style="width: 100%;">
+              {% else %}
+              <tbody>
+                <tr>
+                  <th scope="row">Product code</th>
+                  <td>SKU: {{ product.product_id }}</td>
+                </tr>
+                <tr>
+                  <th scope="row">Weight</th>
+                  <td>1kg, 2kg</td>
+                </tr>
+                <tr>
+                  <th scope="row">Styles</th>
+                  <td>@Girly</td>
+                </tr>
+                <tr>
+                  <th scope="row">Properties</th>
+                  <td>Short Dress</td>
+                </tr>
+              </tbody>
+              {% endif %}
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-pane" id="tab-reve">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="product-details-frame">
+            <ul class="review-list">
+              {% for review in reviews %}
+              <li class="review-item">
+                <div class="review-media">
+                  <a class="review-avatar" href="#"><img src="{{review.user_avatar.url}}" alt="review" /></a>
+                  <h5 class="review-meta">
+                    <a href="#">{{review.user.username}}</a><span>{{review.created_at}}</span>
+                  </h5>
+                </div>
+                <ul class="review-rating">
+                  <li class="icofont-ui-rating"></li>
+                  <li class="icofont-ui-rating"></li>
+                  <li class="icofont-ui-rating"></li>
+                  <li class="icofont-ui-rating"></li>
+                  <li class="icofont-ui-rate-blank"></li>
+                </ul>
+                <p class="review-desc">{{review.comment}}</p>
+                <form class="review-reply" action=" {% url 'products:add_rep_rev' review.id  product.id %} "
+                  method="POST">
+                  {% csrf_token %}
+                  <input type="text" placeholder="reply your thoughts" name="repCom" /><button name="submit">
+                    <i class="icofont-reply"></i>reply
+                  </button>
+                </form>
+                <ul class="review-reply-list">
+                  {% for reply in review|reply %}
+                  <li class="review-reply-item">
+                    <div class="review-media">
+                      <a class="review-avatar" href="#"><img src="{{reply.cu.avatar.url}}" alt="review" /></a>
+                      <h5 class="review-meta">
+                        <a href="#">{{reply.user.username}}</a><span><b>author -</b>{{reply.date}}</span>
+                      </h5>
+                    </div>
+                    <p class="review-desc">{{reply.rep_comment}}</p>
+                    {% if request.user == reply.user %}
+                    <form class="review-reply" action=" {% url 'products:reply_delete' reply.id product.id %} "
+                      method="POST">
+                      {% csrf_token %}
+                      <button name="submit">
+                        <i class="icofont-reply"></i>delete
+                      </button>
+                    </form>
+                    {% endif %}
+                  </li>
+                  {% endfor %}
+                </ul>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          <div class="product-details-frame">
+            <h3 class="frame-title">add your review</h3>
+
+            <form action="{% url 'products:add_to_reviews' %}" class="review-form" method="POST">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="star-rating">
+                    <input type="radio" id="star-1" name="star" value="5" />
+                    <label for="star-1"></label>
+                    <input type="radio" id="star-2" name="star" value="4" /><label for="star-2"></label>
+                    <input type="radio" id="star-3" name="star" value="3" /><label for="star-3"></label><input
+                      type="radio" id="star-4" name="star" value="2" /><label for="star-4"></label>
+                    <input type="radio" id="star-5" name="star" value="1" /><label for="star-5"></label>
+                  </div>
+                </div>
+
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <textarea class="form-control" placeholder="Describe" name="comment" required></textarea>
+                  </div>
+                </div>
+
+                <input type="hidden" name="product_id" value="{{product.id}}" />
+
+                <div class="col-lg-12">
+                  <button type="submit" class="btn btn-inline">
+                    <i class="icofont-water-drop"></i><span>drop your review</span>
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

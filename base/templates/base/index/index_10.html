@@ -1,0 +1,237 @@
+<section class="section niche-part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-heading">
+          <h2>Browse by Top Niche</h2>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <ul class="nav nav-tabs">
+          <li>
+            <a href="#top-order" class="tab-link active" data-bs-toggle="tab"><i class="icofont-price"></i><span>top
+                order</span></a>
+          </li>
+
+          <li>
+            <a href="#top-rate" class="tab-link" data-bs-toggle="tab"><i class="icofont-star"></i><span>top
+                rating</span></a>
+          </li>
+
+          <li>
+            <a href="#top-disc" class="tab-link" data-bs-toggle="tab"><i class="icofont-sale-discount"></i><span>top
+                discount</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tab-pane active" id="top-order">
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+        {% for product in top_order %}
+        <div class="col">
+          <div class="product-card">
+            <div class="product-media">
+              <div class="product-label">
+                <label class="label-text order">{{product.order_count}}</label>
+              </div>
+              {% comment %} <button class="product-wish wish">
+                <i class="icofont-ui-love"></i></button {% endcomment %}><a class="product-image"
+                href=" {% url 'products:product_details' product.id %} "><img src=" {{product.image.url}} "
+                  alt="product" /></a>
+              <div class="product-widget">
+                {% comment %} <a title="Product Compare" href="compare.html" class="icofont-ui-rotation"></a> {%
+                endcomment %}
+                <!-- <a
+                  title="Product Video"
+                  href="../../../watch.html"
+                  class="venobox icofont-ui-play"
+                  data-autoplay="true"
+                  data-vbtype="video"
+                ></a> -->
+                {% comment %} <a title="Product View" href="#" class="icofont-eye-alt" data-bs-toggle="modal"
+                  data-bs-target="#product-view"></a> {% endcomment %}
+              </div>
+            </div>
+            <div class="product-content">
+              <div class="product-rating">
+                <i class="active icofont-star"></i><i class="active icofont-star"></i><i
+                  class="active icofont-star"></i><i class="active icofont-star"></i><i class="active icofont-star"></i>
+                {% comment %} <a href=" {% url 'products:product_details' product.id %} ">(3)</a> {% endcomment %}
+              </div>
+              <h6 class="product-name">
+                <a href=" {% url 'products:product_details' product.id %} ">{{product.name}}</a>
+              </h6>
+              <h6 class="product-price">
+                <del>৳{{product.price}}</del><span>৳{{product.discount_price}}<small>/{{product.unit}}</small></span>
+              </h6>
+              <form method="POST" action=" {% url 'products:add_to_cart' %} ">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{product.id}}" />
+                <input type="hidden" name="quantity" value="1" />
+                <input type="hidden" name="redirect" value="base:index" />
+                <button class="btn btn-success" title="Add to Cart">
+                  <i class="icofont-cart"></i><span>add</span>
+                </button>
+              </form>
+              <div class="product-action">
+                <button class="action-minus" title="Quantity Minus">
+                  <i class="icofont-minus"></i></button><input class="action-input" title="Quantity Number" type="text"
+                  name="quantity" value="1" />
+                <button class="action-plus" title="Quantity Plus">
+                  <i class="icofont-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="tab-pane" id="top-rate">
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+        {% for product in top_rated %}
+        <div class="col">
+          <div class="product-card">
+            <div class="product-media">
+              <div class="product-label">
+                <label class="label-text rate">{{product.star_rating}}</label>
+              </div>
+              {% comment %}
+              <button class="product-wish wish">
+                <i class="icofont-ui-love"></i>
+              </button>
+              {% endcomment %}
+              <a class="product-image" href=" {% url 'products:product_details' product.id %} "><img
+                  src="{{product.image.url}}" alt="product" /></a>
+              <div class="product-widget">
+                {% comment %}
+                <a title="Product Compare" href="compare.html" class="icofont-ui-rotation"></a>
+                {% endcomment %}
+                <!-- <a
+                  title="Product Video"
+                  href="../../../watch.html"
+                  class="venobox icofont-ui-play"
+                  data-autoplay="true"
+                  data-vbtype="video"
+                ></a> -->
+                {% comment %}
+                <a title="Product View" href="#" class="icofont-eye-alt" data-bs-toggle="modal"
+                  data-bs-target="#product-view"></a>
+                {% endcomment %}
+              </div>
+            </div>
+            <div class="product-content">
+              <div class="product-rating">
+                <i class="active icofont-star"></i><i class="active icofont-star"></i><i
+                  class="active icofont-star"></i><i class="active icofont-star"></i><i class="icofont-star"></i>
+                {% comment %} <a href="  {% url 'products:product_details' product.id %} ">(3)</a> {% endcomment %}
+              </div>
+              <h6 class="product-name">
+                <a href="{% url 'products:product_details' product.id %} ">{{product.name}}</a>
+              </h6>
+              <h6 class="product-price">
+                <del>৳{{product.price}}</del><span>৳{{product.discount_price}}<small>/{{product.unit}}</small></span>
+              </h6>
+
+              <form method="POST" action=" {% url 'products:add_to_cart' %} ">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{product.id}}" />
+                <input type="hidden" name="quantity" value="1" />
+                <input type="hidden" name="redirect" value="base:index" />
+                <button class="btn btn-success" title="Add to Cart">
+                  <i class="icofont-cart"></i><span>add</span>
+                </button>
+              </form>
+
+              <div class="product-action">
+                <button class="action-minus" title="Quantity Minus">
+                  <i class="icofont-minus"></i></button><input class="action-input" title="Quantity Number" type="text"
+                  name="quantity" value="1" />
+                <button class="action-plus" title="Quantity Plus">
+                  <i class="icofont-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="tab-pane" id="top-disc">
+      <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+        {% for product in top_discount %}
+        <div class="col">
+          <div class="product-card">
+            <div class="product-media">
+              <div class="product-label">
+                <label class="label-text off">{{product.discount_percent}}%</label>
+              </div>
+              {% comment %} <button class="product-wish wish">
+                <i class="icofont-ui-love"></i></button {% endcomment %}><a class="product-image"
+                href=" {% url 'products:product_details' product.id %} "><img src="{{product.image.url}}"
+                  alt="product" /></a>
+              <div class="product-widget">
+                {% comment %} <a title="Product Compare" href="compare.html" class="icofont-ui-rotation"></a> {%
+                endcomment %}
+                <!-- <a
+                  title="Product Video"
+                  href="../../../watch.html"
+                  class="venobox icofont-ui-play"
+                  data-autoplay="true"
+                  data-vbtype="video"
+                ></a> -->
+                {% comment %} <a title="Product View" href="#" class="icofont-eye-alt" data-bs-toggle="modal"
+                  data-bs-target="#product-view"></a> {% endcomment %}
+              </div>
+            </div>
+            <div class="product-content">
+              <div class="product-rating">
+                <i class="active icofont-star"></i><i class="active icofont-star"></i><i
+                  class="active icofont-star"></i><i class="active icofont-star"></i><i class="icofont-star"></i>
+                {% comment %} <a href="">(3)</a> {% endcomment %}
+              </div>
+              <h6 class="product-name">
+                <a href="">{{product.name}}</a>
+              </h6>
+              <h6 class="product-price">
+                <del>৳{{product.price}}</del><span>৳{{product.discount_price}}<small>/{{product.unit}}</small></span>
+              </h6>
+              <form method="POST" action=" {% url 'products:add_to_cart' %} ">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{product.id}}" />
+                <input type="hidden" name="quantity" value="1" />
+                <input type="hidden" name="redirect" value="base:index" />
+                <button class="btn btn-success" title="Add to Cart">
+                  <i class="icofont-cart"></i><span>add</span>
+                </button>
+              </form>
+              <div class="product-action">
+                <button class="action-minus" title="Quantity Minus">
+                  <i class="icofont-minus"></i></button><input class="action-input" title="Quantity Number" type="text"
+                  name="quantity" value="1" />
+                <button class="action-plus" title="Quantity Plus">
+                  <i class="icofont-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="section-btn-25">
+          <a href="{% url 'products:index' %}" class="btn btn-outline"><i class="icofont-eye-alt"></i><span>show
+              more</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

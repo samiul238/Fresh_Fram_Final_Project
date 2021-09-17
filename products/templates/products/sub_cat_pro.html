@@ -1,0 +1,428 @@
+{% extends 'main.html' %} {% block body %}
+
+<span></span>
+{% include 'products/products/products_1.html' %}
+<span></span>
+{% include 'products/products/products_2.html' %}
+<span></span>
+
+{% load static %}
+<section class="inner-section shop-part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 order-1 order-lg-0">
+        <div class="shop-widget-promo">
+          <a href="#"
+            ><img src=" {% static 'images/promo/shop/01.jpg' %} " alt="promo"
+          /></a>
+        </div>
+        <div class="shop-widget">
+          <h6 class="shop-widget-title">Filter by Category</h6>
+          {% comment %}
+          <form class="shop-widget-search">
+            <input type="text" placeholder="Search..." />
+          </form>
+          {% endcomment %}
+          <ul class="shop-widget-list shop-widget-scroll">
+            {% for category in sub_category %}
+            <li>
+              <div class="shop-widget-content">
+                <a href=" {% url 'products:sub_cat_products' category %} "
+                  >{{category}}</a
+                >
+              </div>
+              <!-- <span class="shop-widget-number">(13)</span> -->
+            </li>
+            {% endfor %} {% comment %}
+            <li>
+              <div class="shop-widget-content">
+                <input type="checkbox" id="cate1" /><label for="cate1"
+                  >vegetables</label
+                >
+              </div>
+              <!-- <span class="shop-widget-number">(13)</span> -->
+            </li>
+            <li>
+              <div class="shop-widget-content">
+                <input type="checkbox" id="cate2" /><label for="cate2"
+                  >groceries</label
+                >
+              </div>
+              <!-- <span class="shop-widget-number">(28)</span> -->
+            </li>
+            <li>
+              <div class="shop-widget-content">
+                <input type="checkbox" id="cate3" /><label for="cate3"
+                  >fruits</label
+                >
+              </div>
+              <!-- <span class="shop-widget-number">(35)</span> -->
+            </li>
+            <li>
+              <div class="shop-widget-content">
+                <input type="checkbox" id="cate4" /><label for="cate4"
+                  >dairy farm</label
+                >
+              </div>
+              <!-- <span class="shop-widget-number">(47)</span> -->
+            </li>
+            <li>
+              <div class="shop-widget-content">
+                <input type="checkbox" id="cate7" /><label for="cate7"
+                  >dry foods</label
+                >
+              </div>
+              <!-- <span class="shop-widget-number">(77)</span> -->
+            </li>
+            {% endcomment %}
+          </ul>
+          {% comment %}
+          <button class="shop-widget-btn">
+            <i class="icofont-bin"></i><span>clear filter</span>
+          </button>
+          {% endcomment %}
+        </div>
+        <div class="shop-widget">
+          <h6 class="shop-widget-title">Filter by Price</h6>
+          <form>
+            <input type="text" id="amount" name="priceRange" readonly="" />
+            <div id="slider-range"></div>
+            <button type="submit" class="shop-widget-btn">
+              <i class="icofont-search-1"></i><span>search</span>
+            </button>
+          </form>
+        </div>
+
+        <div class="shop-widget">
+          <h6 class="shop-widget-title">Filter by Rating</h6>
+          <form>
+            <ul class="shop-widget-list">
+              <li>
+                <div class="shop-widget-content">
+                  <input type="radio" id="feat1" name="rating" value="5" />
+                  <label for="feat1"
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rating"></i
+                  ></label>
+                </div>
+                <!-- <span class="shop-widget-number">(13)</span> -->
+              </li>
+              <li>
+                <div class="shop-widget-content">
+                  <input type="radio" id="feat2" name="rating" value="4" />
+                  <label for="feat2"
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rate-blank"></i
+                  ></label>
+                </div>
+                <!-- <span class="shop-widget-number">(28)</span> -->
+              </li>
+              <li>
+                <div class="shop-widget-content">
+                  <input type="radio" id="feat3" name="rating" value="3" />
+                  <label for="feat3"
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rate-blank"></i
+                    ><i class="icofont-ui-rate-blank"></i
+                  ></label>
+                </div>
+                <!-- <span class="shop-widget-number">(35)</span> -->
+              </li>
+              <li>
+                <div class="shop-widget-content">
+                  <input type="radio" id="feat4" name="rating" value="2" />
+                  <label for="feat4">
+                    <i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rate-blank"></i
+                    ><i class="icofont-ui-rate-blank"></i
+                    ><i class="icofont-ui-rate-blank"></i>
+                  </label>
+                </div>
+                <!-- <span class="shop-widget-number">(47)</span> -->
+              </li>
+              <li>
+                <div class="shop-widget-content">
+                  <input type="radio" id="feat5" name="rating" value="1" />
+                  <label for="feat5">
+                    <i class="icofont-ui-rating"></i
+                    ><i class="icofont-ui-rate-blank"></i
+                    ><i class="icofont-ui-rate-blank"></i
+                    ><i class="icofont-ui-rate-blank"></i
+                    ><i class="icofont-ui-rate-blank"></i>
+                  </label>
+                </div>
+                <!-- <span class="shop-widget-number">(59)</span> -->
+              </li>
+            </ul>
+            <button type="submit" class="shop-widget-btn">
+              <i class="icofont-bin"></i><span>clear filter</span>
+            </button>
+          </form>
+        </div>
+        {% comment %}
+        <div class="shop-widget">
+          <h6 class="shop-widget-title">Filter by Tag</h6>
+          <ul class="shop-widget-list">
+            <li>
+              <div class="shop-widget-content">
+                <input type="checkbox" id="tag1" /><label for="tag1"
+                  >new items</label
+                >
+              </div>
+              <!-- <span class="shop-widget-number">(13)</span> -->
+            </li>
+            <li>
+              <div class="shop-widget-content">
+                <input type="checkbox" id="tag2" /><label for="tag2"
+                  >sale items</label
+                >
+              </div>
+              <!-- <span class="shop-widget-number">(28)</span> -->
+            </li>
+            <li>
+              <div class="shop-widget-content">
+                <input type="checkbox" id="tag3" /><label for="tag3"
+                  >rating items</label
+                >
+              </div>
+              <!-- <span class="shop-widget-number">(35)</span> -->
+            </li>
+            <li>
+              <div class="shop-widget-content">
+                <input type="checkbox" id="tag4" /><label for="tag4"
+                  >feature items</label
+                >
+              </div>
+              <!-- <span class="shop-widget-number">(47)</span> -->
+            </li>
+            <li>
+              <div class="shop-widget-content">
+                <input type="checkbox" id="tag5" /><label for="tag5"
+                  >discount items</label
+                >
+              </div>
+              <!-- <span class="shop-widget-number">(59)</span> -->
+            </li>
+          </ul>
+          <button class="shop-widget-btn">
+            <i class="icofont-bin"></i><span>clear filter</span>
+          </button>
+        </div>
+        {% endcomment %}
+      </div>
+      <div class="col-lg-9 order-0 order-lg-1">
+        {% comment %}
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="shop-filter">
+              <select class="select">
+                <option selected="">Short by Best Sell</option>
+                <option value="1">Short by New Item</option>
+                <option value="2">Short by Discount</option>
+                <option value="3">Short by Top feat</option>
+              </select>
+
+              <p>Showing 1–9 of 130 results</p>
+            </div>
+          </div>
+        </div>
+        {% endcomment %}
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 row-cols-xl-4">
+          {% for product in products %}
+          <div class="col">
+            <div class="product-card">
+              <div class="product-media">
+                {% comment %}
+                <div class="product-label">
+                  <label class="label-text new">new</label>
+                </div>
+                {% endcomment %} {% comment %}
+                <button class="product-wish wish">
+                  <i class="icofont-ui-love"></i>
+                </button>
+                {% endcomment %}
+                <a
+                  class="product-image"
+                  href=" {% url 'products:product_details' product.id %} "
+                  ><img src="{{product.image.url}}" alt="product"
+                /></a>
+                <div class="product-widget">
+                  {% comment %}
+                  <a
+                    title="Product Compare"
+                    href="compare.html"
+                    class="icofont-ui-rotation"
+                  ></a>
+                  {% endcomment %}
+                  <!-- <a
+                    title="Product Video"
+                    href="{{product.video.url}}"
+                    class="venobox icofont-ui-play"
+                    data-autoplay="true"
+                    data-vbtype="video"
+                  ></a> -->
+                  {% comment %}
+                  <a
+                    title="Product View"
+                    href=" {% url 'products:product_details' product.id %} "
+                    class="icofont-eye-alt"
+                    data-bs-toggle="modal"
+                    data-bs-target="#product-view"
+                  ></a>
+                  {% endcomment %}
+                </div>
+              </div>
+              <div class="product-content">
+                <div class="product-rating">
+                  <i class="active icofont-star"></i
+                  ><i class="active icofont-star"></i
+                  ><i class="active icofont-star"></i
+                  ><i class="active icofont-star"></i
+                  ><i class="icofont-star"></i>
+                  <a href=" {% url 'products:product_details' product.id %} "
+                    >({{product.rating}})</a
+                  >
+                </div>
+                <h6 class="product-name">
+                  <a href=" {% url 'products:product_details' product.id %} "
+                    >{{product.name}}</a
+                  >
+                </h6>
+                <h6 class="product-price">
+                  <del>৳{{product.price}}</del
+                  ><span>৳{{product.discount_price}}<small>/piece</small></span>
+                </h6>
+                <form method="POST" action=" {% url 'products:add_to_cart' %} ">
+                  {% csrf_token %}
+                  <input
+                    type="hidden"
+                    name="product_id"
+                    value="{{product.id}}"
+                  />
+                  <input type="hidden" name="quantity" value="1" />
+                  <input
+                    type="hidden"
+                    name="argu"
+                    value="{{product.sub_category}}"
+                  />
+                  <input
+                    type="hidden"
+                    name="redirect"
+                    value="products:sub_cat_products"
+                  />
+                  <button class="btn btn-success btn-sm" title="Add to Cart">
+                    <i class="icofont-cart"></i><span>add</span>
+                  </button>
+                </form>
+                <div class="product-action">
+                  <button class="action-minus" title="Quantity Minus">
+                    <i class="icofont-minus"></i></button
+                  ><input
+                    class="action-input"
+                    title="Quantity Number"
+                    type="text"
+                    name="quantity"
+                    value="1"
+                  />
+                  <button class="action-plus" title="Quantity Plus">
+                    <i class="icofont-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="pagination">
+              {% if products.has_previous %}
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href=" {% url 'products:sub_cat_products' cate %}?page={{products.previous_page_number}} "
+                  ><i class="icofont-arrow-left"></i
+                ></a>
+              </li>
+              {% endif %}
+
+              <span></span>
+
+              {% comment %} {% if products.has_previous %}
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href=" {% url 'products:cat_products' cate %}?page={{products.previous_page_number}}"
+                  >{{products.previous_page_number}}</a
+                >
+              </li>
+              {% endif %} {% endcomment %}
+              <span></span>
+
+              {% if one_page %}
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href=" {% url 'products:sub_cat_products' cate %}?page=1 "
+                  >1</a
+                >
+              </li>
+              {% endif %}
+
+              <li class="page-item">
+                <a class="page-link active" href="#">{{products.number}}</a>
+              </li>
+
+              {% comment %}
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href=" {% url 'products:cat_products' cate %}?page={{num_pages}} "
+                  >{{num_pages}}</a
+                >
+              </li>
+              {% endcomment %}
+
+              <span></span>
+
+              {% comment %} {% if products.has_next %}
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href=" {% url 'products:cat_products' cate %}?page={{products.next_page_number}}"
+                  >{{products.next_page_number}}</a
+                >
+              </li>
+              {% endif %} {% endcomment %}
+
+              <span></span>
+
+              <span></span>
+
+              {% if products.has_next %}
+              <li class="page-item">
+                <a
+                  class="page-link"
+                  href=" {% url 'products:sub_cat_products' cate %}?page={{products.next_page_number}}"
+                  ><i class="icofont-arrow-right"></i
+                ></a>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

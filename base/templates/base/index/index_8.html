@@ -1,0 +1,105 @@
+<section id="new-items" class="section newitem-part">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="section-heading">
+          <h2>collected new items</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <ul class="new-slider slider-arrow">
+          {% for product in new_products %}
+          <li>
+            {% if product.count_in_stock <= 0 %} <div class="product-card product-disable">
+              {% endif %}
+              <div class="product-card">
+                <div class="product-media">
+                  <div class="product-label">
+                    <label class="label-text new">new</label>
+                  </div>
+                  {% comment %}
+                  <button class="product-wish wish">
+                    <i class="icofont-ui-love"></i>
+                  </button>
+                  {% endcomment %}
+                  <a class="product-image" href=" {% url 'products:product_details' product.id %} "><img
+                      src=" {{ product.image.url }} " alt="product" /></a>
+                  <div class="product-widget">
+                    {% comment %}
+                    <a title="Product Compare" href="compare.html" class="icofont-ui-rotation"></a>
+                    {% endcomment %}
+                    <!-- <a
+                      title="Product Video"
+                      href="../../../watch.html"
+                      class="venobox icofont-ui-play"
+                      data-autoplay="true"
+                      data-vbtype="video"
+                    ></a>
+
+                    <a
+                      title="Product View"
+                      href="#"
+                      class="icofont-eye-alt"
+                      data-bs-toggle="modal"
+                      data-bs-target="#product-view"
+                    ></a> -->
+                  </div>
+                </div>
+                <div class="product-content">
+                  <div class="product-rating">
+                    <i class="active icofont-star"></i><i class="active icofont-star"></i><i
+                      class="active icofont-star"></i><i class="active icofont-star"></i><i class="icofont-star"></i>
+                    <a href=" {% url 'products:product_details' product.id %} ">(3)</a>
+                  </div>
+                  <h6 class="product-name">
+                    <a href=" {% url 'products:product_details' product.id %} ">
+                      {{ product.name }}
+                    </a>
+                  </h6>
+                  <h6 class="product-price">
+                    <del>৳ {{ product.price }} </del><span>৳ {{ product.discount_price }}
+                      <small>/{{product.unit}}</small></span>
+                  </h6>
+
+                  <form method="POST" action=" {% url 'products:add_to_cart' %} ">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{product.id}}" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <input type="hidden" name="redirect" value="base:index" />
+                    <button class="btn btn-success" title="Add to Cart">
+                      <i class="icofont-cart"></i><span>add</span>
+                    </button>
+                  </form>
+
+                  <div class="product-action">
+                    <button class="action-minus" title="Quantity Minus">
+                      <i class="icofont-minus"></i></button><input class="action-input" title="Quantity Number"
+                      type="text" name="quantity" value="1" />
+                    <button class="action-plus" title="Quantity Plus">
+                      <i class="icofont-plus"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {% if product.count_in_stock <= 0 %} </div>
+                {% endif %}
+          </li>
+
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="section-btn-25">
+          <a href="{% url 'products:index' %}" class="btn btn-outline"><i class="icofont-eye-alt"></i><span>show
+              more</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

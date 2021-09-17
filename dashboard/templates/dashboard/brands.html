@@ -1,0 +1,33 @@
+{% extends 'main.html' %} {% block body %}
+
+<style>
+  .dashboard {
+    padding: 50px;
+    margin: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+</style>
+
+<div class="dashboard">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %} {{form.as_p}}
+    <button type="submit" class="btn btn-success">Add</button>
+  </form>
+</div>
+
+<div class="dashboard">
+  <ui>
+    <h3>Existing brands</h3>
+    {% for brand in brands %}
+    <li>
+      {{brand}}
+      <form action="{% url 'dashboard:delete_brands' brand.id %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-denger">delete</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ui>
+</div>
+{% endblock body %}

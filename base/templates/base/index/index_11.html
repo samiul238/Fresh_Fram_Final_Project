@@ -1,0 +1,20 @@
+<section class="section partner-part">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="section-heading">
+          <h2>our valuable partner</h2>
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <ul class="partner-slider slider-arrow">
+          {% for brand in brands %}
+          <li>
+            <a href="#"><img src="{{brand.image.url}}" alt="brand" /></a>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

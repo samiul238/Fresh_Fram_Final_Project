@@ -1,0 +1,332 @@
+{% load base_tags %}
+
+<section class="inner-section checkout-part">
+  <div class="container">
+    <div class="row">
+      {% if not request.user.is_authenticated %}
+      <div class="col-lg-12">
+        <div class="alert-info">
+          <p>
+            Returning customer?
+            <a href=" {% url 'base:login_user' %} ">Click here to login</a>
+          </p>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="col-lg-12">
+        <div class="account-card">
+          <div class="account-title">
+            <h4>Your order</h4>
+          </div>
+          <div class="account-content">
+            <div class="table-scroll">
+              <table class="table-list">
+                <thead>
+                  <tr>
+                    <th scope="col">Serial</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">brand</th>
+                    <th scope="col">quantity</th>
+                    <th scope="col">action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for products in carts %}
+                  <tr>
+                    <td class="table-serial">
+                      <h6>{{forloop.counter}}</h6>
+                    </td>
+                    <td class="table-image">
+                      <img src=" {{products.product.image.url}} " alt="product" />
+                    </td>
+                    <td class="table-name">
+                      <h6> <a href=" {% url 'products:product_details' products.product.id %} ">
+                          {{products.product.name}}
+                        </a> </h6>
+                    </td>
+                    <td class="table-price">
+                      <h6>
+                        ৳{{products.product.discount_price}}<small>/{{products.product.unit}}</small>
+                      </h6>
+                    </td>
+                    <td class="table-brand">
+                      <h6>{{products.product.brand}}</h6>
+                    </td>
+                    <td class="table-quantity">
+                      <form action=" {% url 'products:edit_cart' %} " method="POST">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="type" value="decrease" />
+                        <input type="hidden" name="cart_id" value="{{products.id}}" />
+                        <div class="form-group">
+                          <!-- <label for="exampleSelect2" class="">decrease quantity</label> -->
+                          <select multiple="" class="" id="exampleSelect2" name="quantity" style="display: none;">
+                            {{ products.quantity|looper|safe }}
+                          </select>
+                        </div>
+                        <button type="submit" class="product-add btn btn-success btn-small" title="Add to Cart">
+                          <span>-</span>
+                        </button>
+                      </form>
+
+                      <h6 class="mt-4">{{products.quantity}}</h6>
+
+                      <form action=" {% url 'products:edit_cart' %} " method="POST">
+                        {% csrf_token %}
+
+                        <input type="hidden" name="type" value="increase" />
+                        <input type="hidden" name="cart_id" value="{{products.id}}" />
+                        <div class="form-group">
+                          <!-- <label for="exampleSelect2" class="">add quantity</label> -->
+                          <select multiple="" class="" id="exampleSelect2" name="quantity" style="display: none;">
+                            {{ products.product.count_in_stock|looper|safe }}
+                          </select>
+                        </div>
+                        <button type="submit" class="product-add btn btn-success btn-small" title="Add to Cart">
+                          <span>+</span>
+                        </button>
+                      </form>
+
+
+                    </td>
+                    <td class="table-action">
+                      {% comment %}
+                      <a class="view" href=" {% url 'products:product_details' products.id %} " title="Quick View"
+                        data-bs-toggle="modal" data-bs-target="#product-view"><i class="icofont-eye-alt"></i></a>
+                      {% endcomment %}
+                      <form action=" {% url 'base:del_cart' products.id %} " method="POST">
+                        {% csrf_token %}
+                        <button class="trash" type="submit"><i class="icofont-trash"></i><button>
+                      </form>
+                      {% comment %} <a class="trash" href="#"><i class="icofont-trash"></i></a> {% endcomment %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+
+            <div class="checkout-charge">
+              <ul>
+                {% comment %}
+                <li><span>Sub total</span><span>৳267.45</span></li>
+                <li><span>delivery fee</span><span>৳10.00</span></li>
+                <li><span>discount</span><span>৳00.00</span></li>
+                {% endcomment %}
+                <li>
+                  <span>Total<small>(Incl. VAT)</small></span><span>৳ {{total_price}} </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="account-card">
+          <div class="account-title">
+            <h4>Delivery Schedule</h4>
+          </div>
+          <div class="account-content">
+            <div class="row">
+              <div class="col-md-6 col-lg-4 alert fade show">
+                <div class="profile-card contact active">
+                  <h6>express</h6>
+                  <p>90 min express delivery</p>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4 alert fade show">
+                <div class="profile-card contact">
+                  <h6>8am-10pm</h6>
+                  <p>8.00 AM - 10.00 PM</p>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4 alert fade show">
+                <div class="profile-card contact">
+                  <h6>Next day</h6>
+                  <p>Next day or Tomorrow</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% comment %} <div class="col-lg-12">
+        <div class="account-card">
+          <div class="account-title">
+            <h4>contact number</h4>
+            <button data-bs-toggle="modal" data-bs-target="#contact-add">
+              add contact
+            </button>
+          </div>
+          <div class="account-content">
+            <div class="row">
+              <div class="col-md-6 col-lg-4 alert fade show">
+                <div class="profile-card contact active">
+                  <h6>primary</h6>
+                  <p>+8801838288389</p>
+                  <ul>
+                    <li>
+                      <button class="edit icofont-edit" title="Edit This" data-bs-toggle="modal"
+                        data-bs-target="#contact-edit"></button>
+                    </li>
+                    <li>
+                      <button class="trash icofont-ui-delete" title="Remove This" data-bs-dismiss="alert"></button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4 alert fade show">
+                <div class="profile-card contact">
+                  <h6>secondary</h6>
+                  <p>+8801941101915</p>
+                  <ul>
+                    <li>
+                      <button class="edit icofont-edit" title="Edit This" data-bs-toggle="modal"
+                        data-bs-target="#contact-edit"></button>
+                    </li>
+                    <li>
+                      <button class="trash icofont-ui-delete" title="Remove This" data-bs-dismiss="alert"></button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4 alert fade show">
+                <div class="profile-card contact">
+                  <h6>secondary</h6>
+                  <p>+8801747875727</p>
+                  <ul>
+                    <li>
+                      <button class="edit icofont-edit" title="Edit This" data-bs-toggle="modal"
+                        data-bs-target="#contact-edit"></button>
+                    </li>
+                    <li>
+                      <button class="trash icofont-ui-delete" title="Remove This" data-bs-dismiss="alert"></button>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> {% endcomment %}
+
+      <div class="col-lg-12">
+        <div class="account-card">
+          <div class="account-title">
+            <h4>delivery addresses</h4>
+            <a href=" {% url 'base:profile' %} " data-bs-target="#address-add">
+              add address
+            </a>
+          </div>
+
+          <div class="account-content">
+            <div class="row">
+              <div class="col-md-6 col-lg-4 alert fade show">
+                <div class="profile-card address active">
+                  <p>{{address}}</p>
+                  {% comment %}
+                  <ul class="user-action">
+                    <li>
+                      <button class="edit icofont-edit" title="Edit This" data-bs-toggle="modal"
+                        data-bs-target="#address-edit"></button>
+                    </li>
+                    <li>
+                      <button class="trash icofont-ui-delete" title="Remove This" data-bs-dismiss="alert"></button>
+                    </li>
+                  </ul>
+                  {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="account-card mb-0">
+          <div class="account-title">
+            <h4>payment option</h4>
+            <button data-bs-toggle="modal" data-bs-target="#payment-add">
+              add card
+            </button>
+          </div>
+          <form id="OrderForm" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="totalPrice" value="{{total_price}}" />
+            <div class="account-content">
+              <div class="row">
+                <div class="col-md-6 col-lg-4 alert fade show">
+                  <!-- Set up a container element for the button -->
+
+                  {% comment %}
+                  <div class="payment-card payment active">
+                    <img src="images/payment/png/01.png" alt="payment" />
+                    <h4>card number</h4>
+                    <p>
+                      <span>****</span><span>****</span><span>****</span><sup>1876</sup>
+                    </p>
+                    <h5>miron mahmud</h5>
+                    <button class="trash icofont-ui-delete" title="Remove This" data-bs-dismiss="alert"></button>
+                  </div>
+                  {% endcomment %}
+                </div>
+                {% comment %}
+                <div class="col-md-6 col-lg-4 alert fade show">
+                  <div class="payment-card payment">
+                    <img src="images/payment/png/02.png" alt="payment" />
+                    <h4>card number</h4>
+                    <p>
+                      <span>****</span><span>****</span><span>****</span><sup>1876</sup>
+                    </p>
+                    <h5>miron mahmud</h5>
+                    <button class="trash icofont-ui-delete" title="Remove This" data-bs-dismiss="alert"></button>
+                  </div>
+                </div>
+                {% endcomment %} {% comment %}
+                <div class="col-md-6 col-lg-4 alert fade show">
+                  <div class="payment-card payment">
+                    <img src="images/payment/png/03.png" alt="payment" />
+                    <h4>card number</h4>
+                    <p>
+                      <span>****</span><span>****</span><span>****</span><sup>1876</sup>
+                    </p>
+                    <h5>miron mahmud</h5>
+                    <button class="trash icofont-ui-delete" title="Remove This" data-bs-dismiss="alert"></button>
+                  </div>
+                </div>
+                {% endcomment %}
+              </div>
+            </div>
+          </form>
+          {% comment %}
+          <div class="checkout-check">
+            <input type="checkbox" id="checkout-check" /><label for="checkout-check">By making this purchase you agree
+              to our
+              <a href="#">Terms and Conditions</a>.</label>
+          </div>
+          {% endcomment %}
+          <button onclick="formSubmission()" class="btn btn-inline" name="checkoutSubmit">
+            {% comment %} <a href="#" class="btn btn-inline">proced to checkout</a> {% endcomment %}
+            proced to checkout
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Include the PayPal JavaScript SDK -->
+
+
+
+<script>
+  function formSubmission() {
+    document.getElementById("OrderForm").submit();
+  }
+</script>

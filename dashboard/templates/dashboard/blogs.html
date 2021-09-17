@@ -1,0 +1,37 @@
+{% extends 'main.html' %} {%block body%}
+<style>
+   .dashboard {
+     padding: 50px;
+     margin: 50px;
+     border: 2px solid black;
+     border-radius: 10px;
+   }
+
+  }
+</style>
+
+<div class="dashboard">
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %} {{form.as_p}}
+    <button type="submit" class="btn btn-success">Add</button>
+  </form>
+</div>
+
+<div class="dashboard">
+  <ui>
+    <h2>Existing blogs</h2>
+    {% for blog in blogs %}
+    <li>
+      <a href=" {% url 'dashboard:edit_blog' blog.id %} " class="link-primary"
+        >{{blog}}</a
+      >
+      <form action=" {% url 'dashboard:delete_blog' blog.id %} " method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-denger">delete</button>
+      </form>
+    </li>
+    {% endfor %}
+  </ui>
+</div>
+
+{% endblock %}

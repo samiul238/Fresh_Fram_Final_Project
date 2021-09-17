@@ -1,0 +1,168 @@
+{% load static %} {% load products_tags %}
+
+<section class="inner-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="details-gallery">
+          <div class="details-label-group">
+            {% comment %}
+            <label class="details-label new">new</label>
+            {% endcomment %} {% if product.discount %}
+            <label class="details-label off">- {{ product.discount }} %</label>
+            {% endif %}
+          </div>
+          <ul class="details-preview">
+            <li>
+              <img src=" {{ product.image.url }} " alt="product" />
+            </li>
+            <li>
+              <img src=" {{ product.image.url }} " alt="product" />
+            </li>
+            <li>
+              <img src=" {{ product.image.url }} " alt="product" />
+            </li>
+            <li>
+              <img src=" {{ product.image.url }} " alt="product" />
+            </li>
+            <li>
+              <img src=" {{ product.image.url }} " alt="product" />
+            </li>
+          </ul>
+          <ul class="details-thumb">
+            <li>
+              <img src=" {{ product.image.url }} " alt="product" />
+            </li>
+            <li>
+              <img src=" {{ product.image.url }} " alt="product" />
+            </li>
+            <li>
+              <img src=" {{ product.image.url }} " alt="product" />
+            </li>
+            <li>
+              <img src=" {{ product.image.url }} " alt="product" />
+            </li>
+            <li>
+              <img src=" {{ product.image.url }} " alt="product" />
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        {% comment %}
+        <ul class="product-navigation">
+          <li class="product-nav-prev">
+            <a href="#">
+              <i class="icofont-arrow-left"></i>prev product
+              <span class="product-nav-popup"><img src=" {% static 'images/product/02.jpg' %} "
+                  alt="product" /><small>green chilis</small></span>
+            </a>
+          </li>
+          <li class="product-nav-next">
+            <a href="#">
+              next product <i class="icofont-arrow-right"></i><span class="product-nav-popup"><img
+                  src=" {% static 'images/product/03.jpg' %} " alt="product" /><small>green chilis</small></span>
+            </a>
+          </li>
+        </ul>
+        {% endcomment %}
+        <div class="details-content">
+          <h3 class="details-name">
+            <a href="#"> {{ product.name }} </a>
+          </h3>
+          <div class="details-meta">
+            <p>SKU:<span> {{ product.product_id }} </span></p>
+            <p>BRAND:<a href="#"> {{ product.brand }} </a></p>
+          </div>
+          <div class="details-rating">
+            <i class="active icofont-star"></i><i class="active icofont-star"></i><i class="active icofont-star"></i><i
+              class="active icofont-star"></i><i class="icofont-star"></i><a href="#">({{reviews_count}} reviews)
+              <span></span>
+              {% if not product.rating is None %}
+              ({{product.rating}} ratings) {% endif %}
+            </a>
+          </div>
+          <h3 class="details-price">
+            <del>৳ {{ product.price }} </del><span>৳ {{ product.discount_price }}
+              <small>/per {{product.unit}}</small></span>
+          </h3>
+          <p class="details-desc">{{ product.description }}</p>
+
+          <div class="details-list-group">
+            <label class="details-list-title">tags:</label>
+            <ul class="details-tag-list">
+              {% for tag in product.tag_list|evaler %}
+              <li><a href="#"> {{ tag }} </a></li>
+              {% endfor %}
+            </ul>
+          </div>
+
+          <div class="details-list-group">
+            <label class="details-list-title">Count in store:</label>
+            {{product.count_in_stock}} {{product.unit}}
+          </div>
+
+          <div class="details-list-group">
+            <label class="details-list-title">Share:</label>
+            <ul class="details-share-list">
+              <li>
+                <a href="#" class="icofont-facebook" title="Facebook"></a>
+              </li>
+              <li>
+                <a href="#" class="icofont-twitter" title="Twitter"></a>
+              </li>
+              <li>
+                <a href="#" class="icofont-linkedin" title="Linkedin"></a>
+              </li>
+              <li>
+                <a href="#" class="icofont-instagram" title="Instagram"></a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="details-add-group">
+            <form action=" {% url 'products:add_to_cart' %} " method="POST">
+              {% csrf_token %}
+
+              <input type="hidden" name="product_id" value="{{product.id}}" />
+              <div class="form-group">
+                <label for="exampleSelect2" class="">select quantity</label>
+                <select multiple="" class="" id="exampleSelect2" name="quantity">
+                  {{ product.count_in_stock|looper|safe }}
+                </select>
+              </div>
+
+              {% if product.count_in_stock <= 0 %} <button type="submit" class="product-add" title="Add to Cart"
+                disabled>
+                <i class="icofont-cart"></i><span>out of ctock</span>
+                </button>
+                {%else%}
+                <button type="submit" class="product-add" title="Add to Cart">
+                  <i class="icofont-cart"></i><span>add to cart</span>
+                </button>
+                {% endif %}
+            </form>
+
+            <div class="product-action">
+              <button class="action-minus" title="Quantity Minus">
+                <i class="icofont-minus"></i></button><input class="action-input" title="Quantity Number" type="text"
+                name="quantity" value="1" />
+              <button class="action-plus" title="Quantity Plus">
+                <i class="icofont-plus"></i>
+              </button>
+            </div>
+          </div>
+          {% comment %}
+          <div class="details-action-group">
+            <a class="details-wish wish" href="#" title="Add Your Wishlist"><i class="icofont-heart"></i><span>add to
+                wish</span></a>
+
+            <a class="details-compare" href="compare.html" title="Compare This Item"><i
+                class="icofont-ui-rotation"></i><span>Compare This</span></a>
+          </div>
+          {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

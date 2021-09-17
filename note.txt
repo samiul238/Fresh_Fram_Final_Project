@@ -1,0 +1,30 @@
+pip install -r requirements.txt
+
+# Admin
+username: admin1
+email: admin1@gmail.com
+password: admin
+
+# User
+username: user1
+email: user1@gmail.com
+password: user
+
+# Bugs
+01. Unit choices (KG, piece) --/--
+02. new, featured, sale, discount --/--
+03. Count in stock --/--
+04. Browse by Top Niche --
+05. Our latest blogs --/--
+06. special discount offer for grocery items (image) --/--
+07. mistake on products details page(blog) --/--
+08. Related products --/--
+09. Pop up product details
+
+
+
+# another option beside review
+# decimal rating limite
+# 
+
+

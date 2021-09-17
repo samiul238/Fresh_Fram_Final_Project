@@ -1,0 +1,25 @@
+{% extends 'main.html' %} {% block body %} {% load static %}
+<link rel="stylesheet" href=" {% static 'css/custom/checkout.css' %} " />
+
+<section class="inner-section single-banner">
+  <div class="container">
+    <h2>checkout</h2>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href=" {% url 'base:index' %} ">Home</a>
+      </li>
+      <li class="breadcrumb-item">
+        <a href=" {% url 'products:index' %} ">shop grid</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">checkout</li>
+    </ol>
+  </div>
+</section>
+
+{% include 'base/checkout/checkout_1.html' %}
+<span></span>
+{% include 'base/checkout/checkout_2.html' %}
+<span></span>
+{% include 'base/checkout/checkout_3.html' %}
+<span></span>
+{% endblock %}

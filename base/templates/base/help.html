@@ -1,0 +1,108 @@
+{% extends 'main.html' %} {% block body %} {% load static %}
+<link rel="stylesheet" href="{% static 'css/custom/faq.css' %}" />
+
+<section class="inner-section single-banner">
+  <div class="container">
+    <h2>faq questions</h2>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href=" {% url 'base:index' %} ">Home</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">faq</li>
+    </ol>
+  </div>
+</section>
+
+<section class="inner-section faq-part">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="faq-parent">
+          <div class="faq-child">
+            <div class="faq-que">
+              <button>How to contact with Customer Service?</button>
+            </div>
+            <div class="faq-ans">
+              <p>
+                Fresh Farm gives you the best fresh food at cheap rate. If you
+                hava any inquiry or complain about our products please feel free
+                to share your thoughts with us from
+                <a href=" {% url 'base:contact' %} ">HERE</a>
+              </p>
+            </div>
+          </div>
+          <div class="faq-child">
+            <div class="faq-que">
+              <button>
+                App installation failed, how to update system information?
+              </button>
+            </div>
+            <div class="faq-ans">
+              <p>
+                Updates to Google Play Store can cause problems when installing
+                or updating Android applications.Please follow this steps if you
+                are facing this problem.
+                <br />
+                1.You may need to clear cache and data of the Google Play Store
+                app on your device. Go to: Settings → Applications → Application
+                manager (or find the Google Play Store in the list) → Google
+                Play Store app → Clear Cache, Clear Data.
+                <br />
+                2.It is also possible to uninstall the Google Play updates and
+                roll back the app version to fix the issue. Go to: Settings →
+                Applications → Google Play Store app → Uninstall updates
+                <br />
+                3.After that go to the Google Play Store and download Fresh Farm
+                again.
+              </p>
+            </div>
+          </div>
+          <div class="faq-child">
+            <div class="faq-que">
+              <button>Website reponse taking time, how to improve?</button>
+            </div>
+            <div class="faq-ans">
+              <p>
+                For computer,Go to your left side of the window and then Right
+                click & hold to the Refresh icon for 2-4 sec to hard cache
+                reload.
+                <br />
+                <br />
+                For Smartphones, Go the the app settings & then clear the cache.
+              </p>
+            </div>
+          </div>
+          <div class="faq-child">
+            <div class="faq-que">
+              <button>How do I create a account?</button>
+            </div>
+            <div class="faq-ans">
+              <p>
+                If you are a new user in our site go to the
+                <a href=" {% url 'base:register_user' %} ">Register NOW</a> page
+                for registration or if you are an excisting user go to the
+                <a href=" {% url 'base:login_user' %} ">LOGIN</a> page.
+              </p>
+            </div>
+          </div>
+          <div class="faq-child">
+            <div class="faq-que">
+              <button>I cannot find an answer to my question!</button>
+            </div>
+            <div class="faq-ans">
+              <p>
+                If you wanna share your thoughts with us or if you don't find
+                your desire answer please
+                <a href=" {% url 'base:contact' %} ">CLICK HERE</a> to get us in
+                touch.We are always here for you. Customer satisfaction is our
+                main & only priority.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%endblock%}

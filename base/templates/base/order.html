@@ -1,0 +1,9 @@
+{% extends 'main.html' %} {% block body %}
+<span></span>
+{% for order in orders %}
+
+<h4><a href=" {% url 'base:order_details' order.id %} "> {{order}} </a></h4>
+
+{% endfor %}
+<span></span>
+{% endblock %}

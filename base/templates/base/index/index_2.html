@@ -1,0 +1,35 @@
+{% load static %}
+
+<section class="home-index-slider slider-arrow slider-dots">
+  {% for banner in home_banners %}
+
+  <div class="banner-part banner-1">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 col-lg-6">
+          <div class="banner-content">
+            <h1>{{ banner.title }}</h1>
+            <p>{{ banner.description|truncatechars:"100" }}</p>
+            <div class="banner-btn">
+              <a class="btn btn-inline" href="{% url 'products:index' %}"
+                ><i class="icofont-shopping-cart"></i><span>shop now</span></a
+              >
+              {% comment %}
+              <a class="btn btn-outline" href="{% url 'base:offers' %}"
+                ><i class="icofont-sale-discount"></i><span>get offer</span></a
+              >
+              {% endcomment %}
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-6">
+          <div class="banner-img">
+            <img src=" {{ banner.image.url }} " alt="index" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+</section>
